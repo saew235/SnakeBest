@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     Timer timer;
     Random random;
+    boolean isWin = false;
 
 
     GamePanel() {
@@ -80,14 +81,18 @@ public class GamePanel extends JPanel implements ActionListener {
             FontMetrics metrics = getFontMetrics(g.getFont());
             g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + applesEaten))/2, g.getFont().getSize());
 
-            if (bodyParts > 4) {
+            if (applesEaten >= 10) {
                 running = false;
+                isWin = true;
             }
+
         }
+
         else {
-
-            gameOver(g);
-
+            if (isWin) {
+                gameWin(g);
+            } else
+                gameOver(g);
         }
     }
 
@@ -175,11 +180,6 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void gameOver(Graphics g) {
-
-        if (bodyParts > 4) {
-            gameWin(g);
-        } else {
-
             g.setColor(Color.red);
             g.setFont(new Font("Ink Free", Font.BOLD, 75));
             FontMetrics metrics = getFontMetrics(g.getFont());
@@ -190,7 +190,6 @@ public class GamePanel extends JPanel implements ActionListener {
             g.setFont(new Font("Ink Free", Font.BOLD, 35));
             FontMetrics metrics2 = getFontMetrics(g.getFont());
             g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics2.stringWidth("Score: " + applesEaten)) / 2, g.getFont().getSize());
-        }
     }
 
     @Override
